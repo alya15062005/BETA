@@ -4,21 +4,25 @@ import {
     createNewAktivitas,
     createNewLaporan,
     createNewOB,
+    createNewSatpam,
     createNewPenugasan,
     createNewRuangan,
     createNewTugas,
     deleteExistingOB,
+    deleteExistingSatpam,
     deleteExistingPenugasan,
     deleteExistingTugas,
     getAktivitas,
     getLaporan,
     getLaporanByPenugasan,
     getOB,
+    getSatpam,
     getPenugasan,
     getPenugasanById,
     getRuangan,
     getTugas,
     updateExistingOB,
+    updateExistingSatpam,
     updateExistingPenugasan,
     updateExistingTugas,
     updateLaporanController
@@ -48,6 +52,12 @@ router.get("/ob/all", getOB);
 router.post("/ob", createNewOB);
 router.put("/ob/:id", updateExistingOB);
 router.delete("/ob/:id", deleteExistingOB);
+
+// SATPAM ROUTES
+router.get("/satpam/all", getSatpam);
+router.post("/satpam", createNewSatpam);
+router.put("/satpam/:id", updateExistingSatpam);
+router.delete("/satpam/:id", deleteExistingSatpam);
 
 // RUANGAN ROUTES
 router.get("/ruangan/all", getRuangan);

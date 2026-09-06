@@ -49,6 +49,11 @@ export default function AdminSidebar() {
       icon: <FiUsers />,
     },
     {
+      name: "Kelola Satpam",
+      path: "/admin/satpam",
+      icon: <FiUsers />,
+    },
+    {
       name: "Kelola Tugas",
       path: "/admin/tugas",
       icon: <FiClipboard />,

@@ -7,6 +7,7 @@ import DashboardAdmin from "./pages/DashboardAdmin";
 import KelolaArea from "./pages/KelolaArea";
 import KelolaOB from "./pages/KelolaOB";
 import KelolaShift from "./pages/KelolaShift";
+import KelolaSatpam from "./pages/KelolaSatpam";
 import KelolaTugas from "./pages/KelolaTugas";
 import KelolaUser from "./pages/KelolaUser";
 import Laporan from "./pages/Laporan";
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/admin/area" element={<AdminRoute><KelolaArea /></AdminRoute>} />
       <Route path="/admin/shift" element={<AdminRoute><KelolaShift /></AdminRoute>} />
       <Route path="/admin/ob" element={<AdminRoute><KelolaOB /></AdminRoute>} />
+      <Route path="/admin/satpam" element={<AdminRoute><KelolaSatpam /></AdminRoute>} />
       <Route path="/admin/tugas" element={<AdminRoute><KelolaTugas /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><KelolaUser /></AdminRoute>} />
       <Route path="/admin/laporan" element={<AdminRoute><Laporan /></AdminRoute>} />

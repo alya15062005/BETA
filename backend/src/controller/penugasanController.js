@@ -8,11 +8,13 @@ import {
     createRuangan,
     createTugas,
     deleteOB,
+    deleteSatpam,
     deletePenugasan,
     deleteTugas,
     findAllAktivitas,
     findAllLaporan,
     findAllOB,
+    findAllSatpam,
     findAllPenugasan,
     findAllRuangan,
     findAllTugas,
@@ -22,6 +24,7 @@ import {
     findTugasById,
     updateLaporan,
     updateOB,
+    updateSatpam,
     updatePenugasan,
     updateTugas
 } from "../models/penugasanModel.js";
@@ -316,6 +319,57 @@ export const deleteExistingOB = async (req, res) => {
       success: false,
       error: error.message
     });
+  }
+};
+
+// SATPAM CRUD
+export const getSatpam = async (req, res) => {
+  try {
+    res.json({ success: true, data: await findAllSatpam() });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const createNewSatpam = async (req, res) => {
+  try {
+    const data = req.body;
+    if (!data.nama_satpam) {
+      return res.status(400).json({ success: false, message: "Nama satpam harus diisi" });
+    }
+    const satpam = await createSatpam(data);
+    res.status(201).json({ success: true, message: "Satpam berhasil dibuat", data: satpam });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const updateExistingSatpam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    if (!data.nama_satpam) {
+      return res.status(400).json({ success: false, message: "Nama satpam harus diisi" });
+    }
+    const satpam = await updateSatpam(id, data);
+    if (!satpam) return res.status(404).json({ success: false, message: "Satpam tidak ditemukan" });
+    res.json({ success: true, message: "Satpam berhasil diupdate", data: satpam });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const deleteExistingSatpam = async (req, res) => {
+  try {
+    const satpam = await deleteSatpam(req.params.id);
+    if (!satpam) return res.status(404).json({ success: false, message: "Satpam tidak ditemukan" });
+    res.json({ success: true, message: "Satpam berhasil dihapus" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, error: error.message });
   }
 };
 

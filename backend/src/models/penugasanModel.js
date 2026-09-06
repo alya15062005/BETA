@@ -276,6 +276,42 @@ export const deleteOB = async (id) => {
   }
 };
 
+export const findAllSatpam = async () => {
+  try {
+    const result = await pool.query(
+      "SELECT id_satpam, nama_satpam, kontak, COALESCE(status, 'aktif') AS status FROM satpam ORDER BY nama_satpam"
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error finding all satpam:", error);
+    throw error;
+  }
+};
+
+export const createSatpam = async (data) => {
+  const result = await pool.query(
+    "INSERT INTO satpam (nama_satpam, kontak, status) VALUES ($1, $2, COALESCE($3, 'aktif')) RETURNING *",
+    [data.nama_satpam, data.kontak, data.status]
+  );
+  return result.rows[0];
+};
+
+export const updateSatpam = async (id, data) => {
+  const result = await pool.query(
+    "UPDATE satpam SET nama_satpam = $1, kontak = $2, status = COALESCE($3, status) WHERE id_satpam = $4 RETURNING *",
+    [data.nama_satpam, data.kontak, data.status, id]
+  );
+  return result.rows[0];
+};
+
+export const deleteSatpam = async (id) => {
+  const result = await pool.query(
+    "DELETE FROM satpam WHERE id_satpam = $1 RETURNING *",
+    [id]
+  );
+  return result.rows[0];
+};
+
 // Ruangan functions
 export const findAllRuangan = async () => {
   try {
