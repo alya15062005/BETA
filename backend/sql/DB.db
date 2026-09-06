@@ -1,5 +1,5 @@
 CREATE TABLE users (
-  id_user SERIAL PRIMARY KEY,
+  id_user BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   nama_lengkap VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE ob (
-  id_ob SERIAL PRIMARY KEY,
+  id_ob BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nama_ob VARCHAR(100) UNIQUE NOT NULL,
   kontak VARCHAR(20),
   status VARCHAR(20) DEFAULT 'aktif'
@@ -21,7 +21,7 @@ CREATE TABLE ob (
 );
 
 CREATE TABLE ruangan (
-  id_ruangan SERIAL PRIMARY KEY,
+  id_ruangan BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nama_ruangan VARCHAR(100) NOT NULL,
   lantai VARCHAR(10) NOT NULL,
   status VARCHAR(20) DEFAULT 'aktif' CHECK (status IN ('aktif', 'non-aktif')),
@@ -31,7 +31,7 @@ CREATE TABLE ruangan (
 );
 
 CREATE TABLE tugas (
-  id_tugas SERIAL PRIMARY KEY,
+  id_tugas BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nama_tugas VARCHAR(100) NOT NULL,
   deskripsi TEXT,
   kategori VARCHAR(50) DEFAULT 'Pembersihan',
@@ -39,10 +39,40 @@ CREATE TABLE tugas (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE shift (
+  id_shift BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nama_shift VARCHAR(100) NOT NULL,
+  jam_mulai TIME NOT NULL,
+  jam_selesai TIME NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE penugasan (
+  id_penugasan BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_user BIGINT UNSIGNED NOT NULL,
+  id_ob BIGINT UNSIGNED,
+  id_ruangan BIGINT UNSIGNED,
+  id_tugas BIGINT UNSIGNED,
+  tanggal_awal DATE NOT NULL,
+  tanggal_akhir DATE NOT NULL,
+  kode_pengerjaan VARCHAR(50) UNIQUE,
+  shift VARCHAR(20),
+  deskripsi TEXT,
+  catatan_khusus TEXT, 
+  rolling_mingguan BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
+  FOREIGN KEY (id_ob) REFERENCES ob(id_ob) ON DELETE SET NULL,
+  FOREIGN KEY (id_ruangan) REFERENCES ruangan(id_ruangan) ON DELETE SET NULL,
+  FOREIGN KEY (id_tugas) REFERENCES tugas(id_tugas) ON DELETE SET NULL
+);
+
 CREATE TABLE laporan (
-  id_laporan SERIAL PRIMARY KEY,
-  id_penugasan INTEGER NOT NULL,
-  id_user_pengawas INTEGER,
+  id_laporan BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_penugasan BIGINT UNSIGNED NOT NULL,
+  id_user_pengawas BIGINT UNSIGNED,
   tanggal DATE NOT NULL,
   shift VARCHAR(20),
   status_kehadiran VARCHAR(20) NOT NULL CHECK (status_kehadiran IN ('hadir', 'tidak-hadir', 'izin')),
@@ -64,39 +94,9 @@ CREATE TABLE laporan (
   FOREIGN KEY (id_user_pengawas) REFERENCES users(id_user) ON DELETE SET NULL
 );
 
-CREATE TABLE shift (
-  id_shift SERIAL PRIMARY KEY,
-  nama_shift VARCHAR(100) NOT NULL,
-  jam_mulai TIME NOT NULL,
-  jam_selesai TIME NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE penugasan (
-  id_penugasan SERIAL PRIMARY KEY,
-  id_user INTEGER NOT NULL,
-  id_ob INTEGER,
-  id_ruangan INTEGER,
-  id_tugas INTEGER, 
-  tanggal_awal DATE NOT NULL,
-  tanggal_akhir DATE NOT NULL,
-  kode_pengerjaan VARCHAR(50) UNIQUE,
-  shift VARCHAR(20),
-  deskripsi TEXT,
-  catatan_khusus TEXT, 
-  rolling_mingguan BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
-  FOREIGN KEY (id_ob) REFERENCES ob(id_ob) ON DELETE SET NULL,
-  FOREIGN KEY (id_ruangan) REFERENCES ruangan(id_ruangan) ON DELETE SET NULL,
-  FOREIGN KEY (id_tugas) REFERENCES tugas(id_tugas) ON DELETE SET NULL
-);
-
 CREATE TABLE aktivitas (
-  id_aktivitas SERIAL PRIMARY KEY,
-  id_user INTEGER REFERENCES users(id_user),
+  id_aktivitas BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_user BIGINT UNSIGNED,
   nama_user VARCHAR(255),
   role_user VARCHAR(50),
   tipe_aktivitas VARCHAR(50) NOT NULL,

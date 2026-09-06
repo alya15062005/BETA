@@ -69,12 +69,12 @@ export default function Login() {
         <h2 className="bps">KOTA SUKABUMI</h2>
 
         <h1 className="title">BETA</h1>
-        <p className="subtitle">Bersih dan Tertata dan Aman</p>
+        <p className="subtitle">Bersih,Tertata dan Aman</p>
 
         <form onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Username/Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             disabled={loading}

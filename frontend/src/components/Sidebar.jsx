@@ -16,7 +16,7 @@ export default function Sidebar() {
       <div className="logo-section">
         <img 
           src={logoBeta} 
-          alt="BETA - Bersih dan Tertata dan Aman" 
+          alt="BETA - Bersih,Tertata dan Aman" 
           className="logo-full-img" 
         />
       </div>
