@@ -101,11 +101,11 @@ export default function KelolaSatpam() {
           {error && <div className="error-message" style={{ color: "red", marginBottom: "16px" }}>{error}</div>}
           <div className="table-box">
             <table>
-              <thead><tr><th>Nama Satpam</th><th>Kontak</th><th>Status</th><th>Aksi</th></tr></thead>
+              <thead><tr><th>ID</th><th>Nama Satpam</th><th>Kontak</th><th>Status</th><th>Aksi</th></tr></thead>
               <tbody>
-                {loading ? <tr><td colSpan="4" className="empty">Loading...</td></tr> : filteredSatpam.length > 0 ? filteredSatpam.map((item) => (
-                  <tr key={item.id_satpam}><td><div className="user-row"><div className="mini-avatar">{item.nama_satpam?.charAt(0)}</div>{item.nama_satpam}</div></td><td>{item.kontak}</td><td><span className={`status ${item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}`}>{item.status}</span></td><td className="aksi"><FiEdit2 onClick={() => handleOpenModal(item)} style={{ color: "#3b82f6", cursor: "pointer" }} /><FiTrash2 onClick={() => { setDeleteItem(item); setShowDeleteModal(true); }} style={{ color: "#ef4444", cursor: "pointer", marginLeft: "12px" }} /></td></tr>
-                )) : <tr><td colSpan="4" className="empty">Tidak ada data satpam</td></tr>}
+                {loading ? <tr><td colSpan="5" className="empty">Loading...</td></tr> : filteredSatpam.length > 0 ? filteredSatpam.map((item) => (
+                  <tr key={item.id_satpam}><td>SAT-{String(item.id_satpam).padStart(3, "0")}</td><td><div className="user-row"><div className="mini-avatar">{item.nama_satpam?.charAt(0)}</div>{item.nama_satpam}</div></td><td>{item.kontak}</td><td><span className={`status ${item.status?.charAt(0).toUpperCase() + item.status?.slice(1)}`}>{item.status}</span></td><td className="aksi"><FiEdit2 onClick={() => handleOpenModal(item)} style={{ color: "#3b82f6", cursor: "pointer" }} /><FiTrash2 onClick={() => { setDeleteItem(item); setShowDeleteModal(true); }} style={{ color: "#ef4444", cursor: "pointer", marginLeft: "12px" }} /></td></tr>
+                )) : <tr><td colSpan="5" className="empty">Tidak ada data satpam</td></tr>}
               </tbody>
             </table>
           </div>
